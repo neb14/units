@@ -1,0 +1,17 @@
+[Unit]
+Description=apache
+After=etcd.service
+After=docker.service
+
+[Service]
+Restart=always
+RestartSec=10
+EnvironmentFile=/etc/environment
+ExecStartPre=-/usr/bin/docker kill apache
+ExecStartPre=-/usr/bin/docker rm apache 
+ExecStartPre=/usr/bin/docker pull 10.0.0.217:5000/apache:latest
+ExecStart=/usr/bin/docker run --name apache -p 80:80 -t 10.0.0.217:5000/apache:latest
+ExecStop=/usr/bin/docker stop apache
+
+[X-Fleet]
+Global=true
