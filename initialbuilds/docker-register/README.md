@@ -12,7 +12,7 @@ See also [Docker Service Discovery Using Etcd and Haproxy][5]
 
 To run it:
 
-    $ docker run -d -e HOST_IP=1.2.3.4 -e ETCD_HOST=1.2.3.4:4001 -v /var/run/docker.sock:/var/run/docker.sock -t jwilder/docker-register
+    $ docker run -d -e HOST_IP=${COREOS_PRIVATE_IPV4} -e ETCD_HOST=${COREOS_PRIVATE_IPV4}:4001 -v /var/run/docker.sock:/var/run/docker.sock 10.0.0.217:5000/docker-register:latest
 
 Then start any containers you want to be discoverable and publish their exposed port to the host.
 
