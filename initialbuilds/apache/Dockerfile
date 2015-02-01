@@ -6,12 +6,14 @@ DEBIAN_FRONTEND=noninteractive && \
 apt-get install -yq apache2 && \
 a2enmod cgid && \
 a2enconf serve-cgi-bin && \
+apt-get install -yq libdbd-mysql-perl && \
+apt-get install -yq  libclass-dbi-mysql-perl && \
 apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 rm -rf /tmp/*
 
 ADD foo.cgi /usr/lib/cgi-bin/foo.cgi
 
 
-EXPOSE 80:80
+EXPOSE 80
 
 CMD [ "apache2ctl" , "-DFOREGROUND" ]
