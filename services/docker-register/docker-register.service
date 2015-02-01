@@ -1,0 +1,18 @@
+[Unit]
+Description=docker-register
+After=etcd.service
+After=docker.service
+
+[Service]
+Restart=always
+RestartSec=10
+EnvironmentFile=/etc/environment
+ExecStartPre=-/usr/bin/docker kill docker-register
+ExecStartPre=/usr/bin/etcdctl set /test/%m ${COREOS_PRIVATE_IPV4}
+ExecStartPre=-/usr/bin/docker rm docker-register 
+ExecStartPre=/usr/bin/docker pull 10.0.0.217:5000/docker-register:latest
+ExecStart=/usr/bin/docker run --name docker-register -e HOST_IP=${COREOS_PRIVATE_IPV4} -e ETCD_HOST=${COREOS_PRIVATE_IPV4}:4001 -v /var/run/docker.sock:/var/run/docker.sock  10.0.0.217:5000/docker-register:latest
+ExecStop=/usr/bin/docker stop docker-register
+
+[X-Fleet]
+Global=true
