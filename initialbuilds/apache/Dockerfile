@@ -12,6 +12,7 @@ apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
 rm -rf /tmp/*
 
 ADD foo.cgi /usr/lib/cgi-bin/foo.cgi
+ADD HELLOWORLD.gif /var/www/html/HELLOWORLD.gif 
 
 
 EXPOSE 80
